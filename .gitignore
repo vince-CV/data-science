@@ -4,3 +4,6 @@ CRISP_DM/survey_results_public.csv
 CRISP_DM/survey_results_schema.csv
 CRISP_DM/.ipynb_checkpoints/
 CRISP_DM/__pycache__/
+
+Software_Engineering/software_package/3_python_package/distributions/__pycache__/
+Software_Engineering/software_package/data_venv/
