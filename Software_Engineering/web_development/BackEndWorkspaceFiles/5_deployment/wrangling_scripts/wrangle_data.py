@@ -145,8 +145,8 @@ def return_figures():
           y = y_val,
           mode = 'markers',
           text = text,
-          name = country,
-          textposition = 'top'
+          name = country
+          #textposition = 'top'
           )
       )
 

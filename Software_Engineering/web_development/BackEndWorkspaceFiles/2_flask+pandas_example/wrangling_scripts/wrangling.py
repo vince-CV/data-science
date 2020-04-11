@@ -1,7 +1,7 @@
 import pandas as pd
 
 def data_wrangling():
-    df = pd.read_csv('data/API_SP.RUR.TOTL.ZS_DS2_en_csv_v2_9948275.csv', skiprows=4)
+    df = pd.read_csv('C:/Users/xwen2/Desktop/Projects/9. Nano-degree Data Scientist/Software_Engineering/web_development/BackEndWorkspaceFiles/2_flask+pandas_example/data/API_SP.RUR.TOTL.ZS_DS2_en_csv_v2_9948275.csv', skiprows=4)
 
     # Filter for 1990 and 2015, top 10 economies
     df = df[['Country Name','1990', '2015']]
@@ -24,6 +24,6 @@ def data_wrangling():
         x_val = df_melt[df_melt['country'] == country].year.tolist()
         y_val =  df_melt[df_melt['country'] == country].percentrural.tolist()
         data.append((country, x_val, y_val))
-        print(country, x_val, y_val)
+        #print(country, x_val, y_val)
         
     return data

@@ -3,7 +3,9 @@ import json, plotly
 from flask import render_template
 from wrangling_scripts.wrangle_data import return_figures
 
-@app.route('/')
+# 入口文件 
+
+@app.route('/')       # 路由， '/'表示访问路径的时候执行一下函数，返回字符串显示在web上
 @app.route('/index')
 def index():
 

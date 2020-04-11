@@ -46,7 +46,7 @@ def return_figures():
   # as a line chart
     
     graph_one = []
-    df = cleandata('data/API_AG.LND.ARBL.HA.PC_DS2_en_csv_v2.csv')
+    df = cleandata('C:/Users/xwen2/Desktop/Projects/9. Nano-degree Data Scientist/Software_Engineering/web_development/BackEndWorkspaceFiles/3_flask+plotly+pandas_example/data/API_AG.LND.ARBL.HA.PC_DS2_en_csv_v2.csv')
     df.columns = ['country','year','hectaresarablelandperperson']
     df.sort_values('hectaresarablelandperperson', ascending=False, inplace=True)
     countrylist = df.country.unique().tolist()
@@ -71,7 +71,7 @@ def return_figures():
 
 # second chart plots ararble land for 2015 as a bar chart    
     graph_two = []
-    df = cleandata('data/API_AG.LND.ARBL.HA.PC_DS2_en_csv_v2.csv')
+    df = cleandata('C:/Users/xwen2/Desktop/Projects/9. Nano-degree Data Scientist/Software_Engineering/web_development/BackEndWorkspaceFiles/3_flask+plotly+pandas_example/data/API_AG.LND.ARBL.HA.PC_DS2_en_csv_v2.csv')
     df.columns = ['country','year','hectaresarablelandperperson']
     df.sort_values('hectaresarablelandperperson', ascending=False, inplace=True)
     df = df[df['year'] == 2015] 
@@ -91,7 +91,7 @@ def return_figures():
 
 # third chart plots percent of population that is rural from 1990 to 2015
     graph_three = []
-    df = cleandata('data/API_SP.RUR.TOTL.ZS_DS2_en_csv_v2_9948275.csv')
+    df = cleandata('C:/Users/xwen2/Desktop/Projects/9. Nano-degree Data Scientist/Software_Engineering/web_development/BackEndWorkspaceFiles/3_flask+plotly+pandas_example/data/API_SP.RUR.TOTL.ZS_DS2_en_csv_v2_9948275.csv')
     df.columns = ['country', 'year', 'percentrural']
     df.sort_values('percentrural', ascending=False, inplace=True)
     for country in countrylist:
@@ -119,8 +119,8 @@ def return_figures():
     keepcolumns = [str(x) for x in range(1995, 2016)]
     keepcolumns.insert(0, 'Country Name')
 
-    df_one = cleandata('data/API_SP.RUR.TOTL_DS2_en_csv_v2_9914824.csv', keepcolumns, valuevariables)
-    df_two = cleandata('data/API_AG.LND.FRST.K2_DS2_en_csv_v2_9910393.csv', keepcolumns, valuevariables)
+    df_one = cleandata('C:/Users/xwen2/Desktop/Projects/9. Nano-degree Data Scientist/Software_Engineering/web_development/BackEndWorkspaceFiles/3_flask+plotly+pandas_example/data/API_SP.RUR.TOTL_DS2_en_csv_v2_9914824.csv', keepcolumns, valuevariables)
+    df_two = cleandata('C:/Users/xwen2/Desktop/Projects/9. Nano-degree Data Scientist/Software_Engineering/web_development/BackEndWorkspaceFiles/3_flask+plotly+pandas_example/data/API_AG.LND.FRST.K2_DS2_en_csv_v2_9910393.csv', keepcolumns, valuevariables)
     
     df_one.columns = ['country', 'year', 'variable']
     df_two.columns = ['country', 'year', 'variable']
@@ -143,8 +143,8 @@ def return_figures():
           y = y_val,
           mode = 'markers',
           text = text,
-          name = country,
-          textposition = 'top'
+          name = country
+          #textposition = 'top'
           )
       )
 

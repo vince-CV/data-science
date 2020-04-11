@@ -27,6 +27,11 @@ var country_name_brazil = 'Brazil';
 
 var trace1 = {
 /* TODO: Use the year, arable_land_brazil, and country_name_brazil to create a trace for a line chart */
+x: year,
+y:arable_land_brazil,
+mode:'line',
+type:'scatter',
+name: country_name_brazil
 };
 
 var arable_land_germany = [49.67917502148379,
@@ -54,6 +59,11 @@ var arable_land_germany = [49.67917502148379,
 var country_name_germany = 'Germany';
 var trace2 = {
 /* TODO: Create another trace for the Germany data using a line chart */
+x: year,
+y:arable_land_germany,
+mode:'line',
+type:'scatter',
+name: country_name_germany
 };
 
 
@@ -81,11 +91,24 @@ var arable_land_china = [55.6902039146848,
 var country_name_china = 'China';
 var trace3 = {
 /* TODO: Create another trace for the Germany data using a line chart */
+x: year,
+y:arable_land_china,
+mode:'line',
+type:'scatter',
+name: country_name_china
 };
 
 
 var layout = {
   title:'Percent of Land Used for Agriculture <br> 1990-2015',
+  xaxis:{
+    title:'year'
+  },
+  yaxis:
+  {
+    title:'arable land'
+  }
+
 };
 
 var data = [trace1, trace2, trace3];
