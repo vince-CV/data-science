@@ -1,24 +1,87 @@
+import re
+import pickle
 import sys
+import pandas as pd
+import numpy as np
+from sqlalchemy import create_engine
 
+import nltk
+from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize
+from nltk.stem import WordNetLemmatizer
+from nltk.stem.porter import PorterStemmer
+
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import OneHotEncoder
+from sklearn.metrics import f1_score
+from sklearn.metrics import accuracy_score
+from sklearn.model_selection import GridSearchCV
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.metrics import classification_report
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.multioutput import MultiOutputClassifier
+from sklearn.multiclass import OneVsRestClassifier
+from sklearn.multioutput import MultiOutputClassifier
+from sklearn.svm import LinearSVC
+from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
+
+nltk.download('punkt')
+nltk.download('wordnet')
+nltk.download('stopwords')
 
 def load_data(database_filepath):
-    pass
+
+    engine = create_engine('sqlite:///InsertDatabaseName.db')
+    df = pd.read_sql_table('InsertTableName', engine)
+    
+    X = df['message']
+    Y = df.iloc[:,4:]
+    Y['related']=Y['related'].map(lambda x: 1 if x == 2 else x)
+    category_names = Y.columns
+
+    return X, Y, category_names
 
 
 def tokenize(text):
-    pass
+    stop_words = stopwords.words("english")
+    lemmatizer = WordNetLemmatizer()
+    
+    text = re.sub(r"[^a-zA-Z0-9]", " ", text.lower())
+    
+    tokens = word_tokenize(text)
+    tokens = [lemmatizer.lemmatize(word) for word in tokens if word not in stop_words]
+
+    return tokens
 
 
 def build_model():
-    pass
+
+    pipeline = Pipeline([
+        ('vect', CountVectorizer(tokenizer = tokenize)),
+        ('tfidf', TfidfTransformer()),
+        ('clf', MultiOutputClassifier(OneVsRestClassifier(LinearSVC())))
+        ])
+    
+    parameters = {
+        'vect__ngram_range': ((1, 1), (1, 2)),
+        'vect__max_df': (0.75, 1.0)
+        }
+
+    model = GridSearchCV(estimator=pipeline, param_grid=parameters, verbose=3, cv=3)
+
+    return model
 
 
 def evaluate_model(model, X_test, Y_test, category_names):
-    pass
+    y_pred = model.predict(X_test)
+    print(classification_report(Y_test.values, y_pred, target_names=category_names))
+    print('Accuracy: {}'.format(np.mean(Y_test.values == y_pred)))
 
 
 def save_model(model, model_filepath):
-    pass
+    with open(model_filepath, 'wb') as f:
+        pickle.dump(model, f)
 
 
 def main():
