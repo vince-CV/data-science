@@ -100,10 +100,11 @@ def evaluate_model(model, X_test, Y_test, category_names):
         output: no return values, just print f1-score of X_test
     '''
 
-    # get the f1 score of X_test
-    y_pred = model.predict(X_test)
-    print(classification_report(Y_test.values, y_pred, target_names=category_names))
-    print('Accuracy: {}'.format(np.mean(Y_test.values == y_pred)))
+    Y_preds = model.predict(X_test)
+    
+    for i in range(len(category_names)):
+        print("Label:", category_names[i])
+        print(classification_report(Y_test.values[:, i], Y_preds[:, i]))
 
 
 def save_model(model, model_filepath):
