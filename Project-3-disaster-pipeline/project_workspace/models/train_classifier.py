@@ -31,24 +31,38 @@ nltk.download('wordnet')
 nltk.download('stopwords')
 
 def load_data(database_filepath):
-
+    '''
+        load_data is a function to load data from dbfile
+        input: database_filepath
+        output: X, Y, Y_labels
+    '''
+    # load data from database
     engine = create_engine('sqlite:///{}'.format(database_filepath))
     df = pd.read_sql_table('InsertTableName', engine)
     
     X = df['message']
     Y = df.iloc[:,4:]
-    Y['related']=Y['related'].map(lambda x: 1 if x == 2 else x)
+    #Y['related']=Y['related'].map(lambda x: 1 if x == 2 else x)
     category_names = Y.columns
 
     return X, Y, category_names
 
 
 def tokenize(text):
+    '''
+        tokenize is a function to process text data
+        input: text
+        output: clean tokens
+    '''
+
+    # load stop words and wordnetlemmatizer
     stop_words = stopwords.words("english")
     lemmatizer = WordNetLemmatizer()
     
+    # normalize case and remove punctuation
     text = re.sub(r"[^a-zA-Z0-9]", " ", text.lower())
     
+    # tokenize text
     tokens = word_tokenize(text)
     tokens = [lemmatizer.lemmatize(word) for word in tokens if word not in stop_words]
 
@@ -56,7 +70,13 @@ def tokenize(text):
 
 
 def build_model():
+    '''
+        build_model is a function to build model
+        input: no input values
+        output: model
+    '''
 
+    # build pipline
     pipeline = Pipeline([
         ('vect', CountVectorizer(tokenizer = tokenize)),
         ('tfidf', TfidfTransformer()),
@@ -74,12 +94,24 @@ def build_model():
 
 
 def evaluate_model(model, X_test, Y_test, category_names):
+    '''
+        evaluate_model is a function to evaluate model
+        input: model, X_test, Y_test, category_names
+        output: no return values, just print f1-score of X_test
+    '''
+
+    # get the f1 score of X_test
     y_pred = model.predict(X_test)
     print(classification_report(Y_test.values, y_pred, target_names=category_names))
     print('Accuracy: {}'.format(np.mean(Y_test.values == y_pred)))
 
 
 def save_model(model, model_filepath):
+    '''
+        save_model is a function to save final model
+        input: model, model_filepath
+        output: no return values, just save file
+    '''
     with open(model_filepath, 'wb') as f:
         pickle.dump(model, f)
 
