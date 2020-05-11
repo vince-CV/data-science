@@ -57,8 +57,6 @@ D:\WORKSPACE
 </pre>        
 
 
-- README.md
-
 ## 4. Requirements <a name="Requirements"></a>    
 
 All of the requirements are captured in requirements.txt.  
