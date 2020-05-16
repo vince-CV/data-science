@@ -17,8 +17,8 @@ class Model(object):
             Initial function
         '''
 
-        self.MODEL_FP = 'model/weights.best.Xception.hdf5'
-        self.XML_FP = 'model/haarcascade_frontalface_alt.xml'
+        self.MODEL_FP = 'C:/Users/xwen2/Desktop/Projects/9. Nano-degree Data Scientist/Project-5-deep-learning-dog-breed/app/model/weights.best.Xception.hdf5'
+        self.XML_FP = 'C:/Users/xwen2/Desktop/Projects/9. Nano-degree Data Scientist/Project-5-deep-learning-dog-breed/app/model/haarcascade_frontalface_alt.xml'
         self.model = None
         self.dog_names = ['01.Affenpinscher', '02.Afghan_hound', '03.Airedale_terrier', '04.Akita', 
             '05.Alaskan_malamute', '06.American_eskimo_dog', '07.American_foxhound', '08.American_staffordshire_terrier', 

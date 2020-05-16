@@ -1,12 +1,12 @@
 import os
 from flask import Flask, request, url_for, send_from_directory
-from werkzeug import secure_filename
+from werkzeug.utils import secure_filename
 from model.Model import Model
 
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
 
 app = Flask(__name__)
-app.config['UPLOAD_FOLDER'] = '{}/upload'.format(os.getcwd())
+app.config['UPLOAD_FOLDER'] = '{}/Desktop/Projects/9. Nano-degree Data Scientist/Project-5-deep-learning-dog-breed/images/'.format(os.getcwd())
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 
 html = '''
@@ -59,6 +59,6 @@ if __name__ == '__main__':
         main run part
     '''
 
-    server = '0.0.0.0'
-    port = '5000'
+    server = '127.0.0.1'
+    port = '3001'
     app.run(host = server,  port = port, debug = True)
