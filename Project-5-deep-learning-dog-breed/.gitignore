@@ -3,4 +3,6 @@ lfw/
 saved_models/
 .ipynb_checkpoints/
 bottleneck_features/
-
+__pycache__/
+haarcascades/
+images/
