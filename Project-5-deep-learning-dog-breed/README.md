@@ -48,3 +48,9 @@ tqdm                    4.46.0
 </pre>
 
 - So you are welcomed to upload your image, and have fun!
+
+Reference and Thanks:
+1. https://github.com/kylechenoO/Dog_Breed;
+2. https://towardsdatascience.com/building-a-convolutional-neural-network-cnn-in-keras-329fbbadc5f5
+2. https://www.freecodecamp.org/news/how-to-build-a-web-application-using-flask-and-deploy-it-to-the-cloud-3551c985e492/
+
