@@ -42,8 +42,8 @@ tqdm                    4.46.0
 
 - To run web application after installed all the requirements pkgs, lets run the deployed Flask app by running:
 <pre>
-1. `cd app`
-2. `python run.py`
+1. cmd line: cd app
+2. cmd line: python run.py
 3. Running on http://127.0.0.1:3001/
 </pre>
 
