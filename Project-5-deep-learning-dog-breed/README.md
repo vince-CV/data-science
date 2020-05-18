@@ -11,7 +11,7 @@ Dog species identification is a hard tasl even for human. So the major goal to t
 In order to train and evaluate the performance of the CNN model, this project will use the Adam optimizer, categorical_crossentropy as loss function, and accuracy as the metrices.
 It is reasonable to categorical cross entropy to measure the loss because our objects could be more than 100 classes and it's a classification problem. So accuracy is straitforward to evaluathe the classify tasks.
 
-# Project Analysis
+## Project Analysis
 
 The data set is open-sourced and it will using keras.preprocessing to handle the preprocessing part. Bacause one of the tasks of this project is to detect human faces in the images so we should be aware of human faces in the dog set.
 Before training model we should have a feel how the face detetor performed on dog data set: (opencv facial detector, haarcascades)
@@ -21,24 +21,25 @@ and how the dog detector worked on both data set (Resnet50, pretrained on ImageN
 1. 1.0% dog misclassified calssified on human faces data set;
 2. 100.0% dog identified on dag image set.
 
-# Methodology
+## Methodology
 
 CNN have been introduced for multi-image-classify. In this project, it will explore the model in three steps:
 1. build self-defined CNN from scratch;
 2. transfer learning using pre-trained VGG16 as featre extractor + defined model;
 3. using another models as feature extractor; (VGG19, Resnet-50, Inception, Xception)
 
-# Model performance
+## Model performance
 
 To train the model, the Adam optimizer are employed, also categorical_crossentropy as loss and measure the accuracy of predictions on validation set.
 Here is the test accuracy after training:
 1. training from scratch: 1.1962%；
 2. transfer learning with VGG16: 43.7799%;
 3. transfer learning with Xception: 86.9617%.
+
 Also another observation is the training speed is much faster when using transfer learning.
 After trained model, the inference is deployed through Flask.
 
-# Conclusions
+## Conclusions
 1. data pipeline make the data ready for training. This case the preprocessing are readily avaiable using Keras, but for many real-problem, preprocessing using data pipeline is enssential. Collecting data, remove outliers image data, and normalize. Somethimes when the data is limited image augmentation technique would also be introduced.
 2. transfer learning could help with model to converge faster, and also provided more accuracy results. deep learning needs to be in a scene with a large amount of labeled data in order to make better use of its effects. However, in many practical scenarios, we do not have enough labeled data; the universal model can solve most public problems, but it is difficult to meet the specific needs of individual models. Therefore, it is necessary to transform and adapt the general model to meet personalized needs; transfer knowledge from similar fields through transfer learning; model training for some massive data requires a lot of computing power. Generally, small and medium-sized enterprises or individuals Can't afford to burn this money, so they need to be able to use these data and models.
 3. model could be benefited from advanced model (deeper structure). In theory, deeper CNN has stronger capacity of extracting advance or complex features, but also it could also be suffering from training difficulties such as gradient vanishing or overfitting. 
