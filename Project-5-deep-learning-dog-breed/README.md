@@ -21,16 +21,28 @@ and how the dog detector worked on both data set (Resnet50, pretrained on ImageN
 1. 1.0% dog misclassified calssified on human faces data set;
 2. 100.0% dog identified on dag image set.
 
+虽然本例数据异常的情况发生很少，但是对于其他数据驱动的工程通常数据预处理需要对异常数据进行处理，常见的异常数据包括错误标注，缺失，等等，通常处理方法可以包含 1.删除含有异常值的记录； 2.将异常值视为缺失值，交给缺失值处理方法来处理； 3.用平均值来修正； 4.不处理
+
 ## Methodology
 
 CNN have been introduced for multi-image-classify. In this project, it will explore the model in three steps:
 1. build self-defined CNN from scratch;
-2. transfer learning using pre-trained VGG16 as featre extractor + defined model;
+2. transfer learning using pre-trained VGG16 as feature extractor + defined model;
 3. using another models as feature extractor; (VGG19, Resnet-50, Inception, Xception)
+
 
 ## Model performance
 
-To train the model, the Adam optimizer are employed, also categorical_crossentropy as loss and measure the accuracy of predictions on validation set.
+To train the model, the Adam optimizer are employed, also categorical_crossentropy as loss and measure the accuracy of predictions on validation set.<br>
+
+categorical_crossentropy损失函数，交叉熵是用来评估当前训练得到的概率分布与真实分布的差异情况。它刻画的是实际输出（概率）与期望输出（概率）的距离，也就是交叉熵的值越小，两个概率分布就越接近。训练网络所使用的m个类别的标签值是经过矢量化后的m维向量，其中向量一个索引为1，其余索引为0，对应一个类别 (like one-hot encoding)。这样类别被向量化，和神经网络训练出来的m个概率值对应，概率值最大的那个输出所对应的向量，其所代表的标签即为所对应的。
+标签向量化：keras中可使用to_categorical对标签值进行向量化。
+
+准确率(accuracy)： 对于给定的测试数据集，分类器正确分类的样本数与总样本数之比. 也就是损失函数是0-1损失时测试数据集上的准确率. accuracy是正确预测的样本数占总预测样本数的比值，它不考虑预测的样本是正例还是负例。<br>
+Accuracy = (预测正确的样本数)/(总样本数)=(TP+TN)/(TP+TN+FP+FN)
+
+因为本任务属于多分类问题，所以评价标准和损失函数如是选择。
+
 Here is the test accuracy after training:
 1. training from scratch: 1.1962%；
 2. transfer learning with VGG16: 43.7799%;
@@ -39,10 +51,20 @@ Here is the test accuracy after training:
 Also another observation is the training speed is much faster when using transfer learning.
 After trained model, the inference is deployed through Flask.
 
+对于模型调优，本例尝试了:
+
+1. 使用不同的优化算子：Adam, RMSProp；
+
+2. Batch size;
+
+3. 不同模型： VGG19， Xception；
+
 ## Conclusions
 1. data pipeline make the data ready for training. This case the preprocessing are readily avaiable using Keras, but for many real-problem, preprocessing using data pipeline is enssential. Collecting data, remove outliers image data, and normalize. Somethimes when the data is limited image augmentation technique would also be introduced.
 2. transfer learning could help with model to converge faster, and also provided more accuracy results. deep learning needs to be in a scene with a large amount of labeled data in order to make better use of its effects. However, in many practical scenarios, we do not have enough labeled data; the universal model can solve most public problems, but it is difficult to meet the specific needs of individual models. Therefore, it is necessary to transform and adapt the general model to meet personalized needs; transfer knowledge from similar fields through transfer learning; model training for some massive data requires a lot of computing power. Generally, small and medium-sized enterprises or individuals Can't afford to burn this money, so they need to be able to use these data and models.
 3. model could be benefited from advanced model (deeper structure). In theory, deeper CNN has stronger capacity of extracting advance or complex features, but also it could also be suffering from training difficulties such as gradient vanishing or overfitting. 
+
+缺点：Xception参数量大，导致inference的速度缓慢。为使模型更快速推断，更高效的网络（Mobilenet， ShuffleNet）可能是潜在选择。
 
 
 ## What's in it
