@@ -41,7 +41,7 @@ categorical_crossentropy损失函数，交叉熵是用来评估当前训练得�
 准确率(accuracy)： 对于给定的测试数据集，分类器正确分类的样本数与总样本数之比. 也就是损失函数是0-1损失时测试数据集上的准确率. accuracy是正确预测的样本数占总预测样本数的比值，它不考虑预测的样本是正例还是负例。<br>
 Accuracy = (预测正确的样本数)/(总样本数)=(TP+TN)/(TP+TN+FP+FN)
 
-因为本任务属于多分类问题，所以评价标准和损失函数如是选择。
+因为本任务属于**多分类**问题 (numOfClass = 133)，所以评价标准和损失函数如是选择。
 
 Here is the test accuracy after training:
 1. training from scratch: 1.1962%；
@@ -53,28 +53,33 @@ After trained model, the inference is deployed through Flask.
 
 对于模型调优，本例尝试了:
 
-1. 使用不同的优化算子对VGG16模型调优： Adam, RMSProp.
+1. **使用不同的优化算子**： Adam, RMSProp.
 ![avatar](figures/vgg16_opt.png)
+
 从此可以看出，Adam算法在收敛速度上面占优势，但是Train和Validation loss分别收敛至7.5和8左右； 使用RMSProp收敛速度较慢，即使30次epochs之后依然loss在下降。在第20次loss在测试集上降至约6.5左右，在训练集上降至5.5.
 
-2. Batch size;
+2. **Batch size**;
 ![avatar](figures/Xception_RMSProp_bs16.png)
+
 此例对照试验采取不同的batch size对Xception模型的训练影响.
 
-3. 不同模型： VGG16, VGG1, Xception.
+3. **不同模型**： VGG16, VGG1, Xception.
 ![avatar](figures/InceptionV3_RMSProp_bs32.png)
+
 此例测试不同模型的能力，使用batch size = 32， RMSProp的优化算子。
 ResNet-50 收敛速度最快，但是validation loss居于大概0.6并出现过拟合状态（training loss下降但同时validation loss升高）； InceptionV3收敛速度略慢，但validation loss在20次epochs后达到0.9； VGG19是收敛速度最慢的模型，在20次epochs中不能收敛至全局最小； Xception则在validation loss和收敛速度上较其他模型都具有优势，也就是接下来web deployment的pick。
 
-## Conclusions
+综上实验，网络部署将使用Xception模型 （RMSProp, Batch size = 32, epochs = 20）.
+
+## Conclusions & Discussion
 1. data pipeline make the data ready for training. This case the preprocessing are readily avaiable using Keras, but for many real-problem, preprocessing using data pipeline is enssential. Collecting data, remove outliers image data, and normalize. Somethimes when the data is limited image augmentation technique would also be introduced.
 2. transfer learning could help with model to converge faster, and also provided more accuracy results. deep learning needs to be in a scene with a large amount of labeled data in order to make better use of its effects. However, in many practical scenarios, we do not have enough labeled data; the universal model can solve most public problems, but it is difficult to meet the specific needs of individual models. Therefore, it is necessary to transform and adapt the general model to meet personalized needs; transfer knowledge from similar fields through transfer learning; model training for some massive data requires a lot of computing power. Generally, small and medium-sized enterprises or individuals Can't afford to burn this money, so they need to be able to use these data and models.
 3. model could be benefited from advanced model (deeper structure). In theory, deeper CNN has stronger capacity of extracting advance or complex features, but also it could also be suffering from training difficulties such as gradient vanishing or overfitting. 
 
 讨论：
-There are 133 total dog categories.
-There are 8351 total dog images.
-缺点：Xception参数量大，导致inference的速度缓慢。为使模型更快速推断，更高效的网络（Mobilenet， ShuffleNet）可能是潜在选择。
+There are 133 total dog categories and 8351 total dog images. 通过抽样观察数据集下的每一个品类的图片，可以确定数据集大体是是均衡的。 在训练中，意外的是模型出现了过拟合的情况，training loss一直在下降并处于很小的值，但是validation loss却出现缓慢上升。这可能是因为Resnet-50模型表征特征的能力强大（其大量的使用了特征复用的block）而数据量相对小的结果。
+
+为了解决此类问题，可以适量的增大现有数据集（数据增强技术，image augmentation）。并且，由于Xception模型参数量大，导致在网络部署的过程中inference的速度较为缓慢。所以为使模型更快速推断，更高效轻便的、的网络（Mobilenet， ShuffleNet）可能是潜在选择，或者是运用模型压缩或枝剪技术。
 
 
 ## What's in it
