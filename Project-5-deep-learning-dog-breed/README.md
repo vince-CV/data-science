@@ -54,15 +54,15 @@ After trained model, the inference is deployed through Flask.
 对于模型调优，本例尝试了:
 
 1. 使用不同的优化算子对VGG16模型调优： Adam, RMSProp.
-![avatar](/figures/vgg16_opt.png)
+![avatar](figures/vgg16_opt.png)
 从此可以看出，Adam算法在收敛速度上面占优势，但是Train和Validation loss分别收敛至7.5和8左右； 使用RMSProp收敛速度较慢，即使30次epochs之后依然loss在下降。在第20次loss在测试集上降至约6.5左右，在训练集上降至5.5.
 
 2. Batch size;
-![avatar](/figures/Xception_RMSProp_bs16.png)
+![avatar](figures/Xception_RMSProp_bs16.png)
 此例对照试验采取不同的batch size对Xception模型的训练影响.
 
 3. 不同模型： VGG16, VGG1, Xception.
-![avatar](/figures/InceptionV3_RMSProp_bs32.png)
+![avatar](figures/InceptionV3_RMSProp_bs32.png)
 此例测试不同模型的能力，使用batch size = 32， RMSProp的优化算子。
 ResNet-50 收敛速度最快，但是validation loss居于大概0.6并出现过拟合状态（training loss下降但同时validation loss升高）； InceptionV3收敛速度略慢，但validation loss在20次epochs后达到0.9； VGG19是收敛速度最慢的模型，在20次epochs中不能收敛至全局最小； Xception则在validation loss和收敛速度上较其他模型都具有优势，也就是接下来web deployment的pick。
 
