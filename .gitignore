@@ -1,9 +1,9 @@
 .git
 Project-1-bike-data-neural-network/.ipynb_checkpoints/
-CRISP_DM/survey_results_public.csv
-CRISP_DM/survey_results_schema.csv
-CRISP_DM/.ipynb_checkpoints/
-CRISP_DM/__pycache__/
+1. CRISP_DM/survey_results_public.csv
+1. CRISP_DM/survey_results_schema.csv
+1. CRISP_DM/.ipynb_checkpoints/
+1. CRISP_DM/__pycache__/
 
-Software_Engineering/software_package/3_python_package/distributions/__pycache__/
-Software_Engineering/software_package/data_venv/
+3. Software_Engineering/software_package/3_python_package/distributions/__pycache__/
+3. Software_Engineering/software_package/data_venv/
